@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="slides"><img src="img1.jpg" alt="Image 1"></div>
+    <div class="slides"><img src="img2.png" alt="Image 2"></div>
+    <div class="slides"><img src="img3.jpg" alt="Image 3"></div>
+    <div class="slides"><img src="img4.jpg" alt="Image 4"></div>
+    <div class="slides"><img src="img5.jpg" alt="Image 5"></div>
+    <div class="slides"><img src="img6.jpg" alt="Image 6"></div>
+    <div class="slides"><img src="img7.jpg" alt="Image 7"></div>
+    <div class="slides"><img src="img8.jpg" alt="Image 8"></div>
+    <div class="slides"><img src="img9.jpg" alt="Image 9"></div>
+    <div class="slides"><img src="img10.jpg" alt="Image 10"></div>
+    <div class="slides"><img src="img11.jpg" alt="Image 11"></div>
+    <div class="container">
+        <div class="clock" id="digiclk"></div>
+        <div class="ampm" id="ampm"></div>
+    </div>
+
+</body>
+<style>
+   body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #282c34;
+    margin: 0;
+    color: #61dafb;
+}
+
+.container {
+    position: relative;
+    display: flex; /* Use flex to align clock and AM/PM horizontally */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #162b50;
+    border-width: 5px; /* Set border width */
+    border-style: solid; /* Set border style */
+    border-color: rgba(0, 0, 0, 0.522); /* Set border color */
+    border-radius: 25px; /* Set rounded corners */
+    box-shadow: 20px #101111;
+}
+
+
+.clock {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    margin-right: 20px; /* 20px gap between time and AM/PM */
+}
+
+.ampm {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    
+
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slides {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
+}
+
+.slides.show {
+    opacity: 1;
+}
+
+
+</style>
+<script>
+   function clock() {
+        let time = document.getElementById("digiclk");
+        let amorpm = document.getElementById("ampm");
+        const now = new Date();
+        let hours = now.getHours();
+        let minute = now.getMinutes();
+        let second = now.getSeconds();
+        let ampm = "AM";
+
+        if (hours >= 12) {
+            ampm = "PM";
+            if (hours > 12) {
+                hours -= 12;
+            }
+        } else if (hours === 0) {
+            hours = 12;
+        }
+
+        let timedisplay = `${zerosetting(hours)}:${zerosetting(minute)}:${zerosetting(second)}`;
+        time.textContent = timedisplay;
+        amorpm.textContent = ampm;
+    }
+
+   function zerosetting(number) {
+        return number < 10 ? `0${number}` : number;
+    }
+
+    setInterval(clock, 1000);
+    clock();
+
+    let slideIndex = 0;
+
+    function slideshow() {
+        const slides = document.getElementsByClassName("slides");
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].classList.remove("show");
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {
+            slideIndex = 1;
+        }
+        slides[slideIndex - 1].classList.add("show");
+    }
+
+    setInterval(slideshow, 5000);
+    slideshow();
+</script>
+</html>
