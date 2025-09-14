@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .task-input {
+            margin-bottom: 20px;
+        }
+
+        #new-task {
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        #new-task::placeholder {
+            color: #bdc3c7;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .task {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .task.completed {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .task-actions {
+            margin-top: 10px;
+            display: flex;
+        }
+
+        /* Add a margin between the buttons */
+        .task-actions button {
+            margin-right: 10px;
+        }
+
+        .coins, .total-points {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+    <title>Task Manager</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Task Manager</h1>
+        <div class="task-input">
+            <input type="text" id="new-task" placeholder="Add a new task">
+            <button onclick="addTask()">Add Task</button>
+        </div>
+        <div id="task-list" class="task-list">
+            <!-- Tasks will be dynamically added here -->
+        </div>
+        <div id="total-points" class="total-points">
+            <!-- Total points will be displayed here -->
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            class Node {
+                constructor(data) {
+                    this.data = data;
+                    this.completed = false;
+                    this.coins = 0;
+                    this.next = null;
+                }
+            }
+
+            class LinkedList {
+                constructor() {
+                    this.head = null;
+                }
+
+                addTask(task) {
+                    const newNode = new Node(task);
+
+                    if (!this.head) {
+                        this.head = newNode;
+                    } else {
+                        let current = this.head;
+                        while (current.next) {
+                            current = current.next;
+                        }
+                        current.next = newNode;
+                    }
+
+                    this.displayTasks();
+                }
+
+                displayTasks() {
+                    const taskList = document.getElementById("task-list");
+                    const totalPointsSection = document.getElementById("total-points");
+                    taskList.innerHTML = "";
+                    totalPointsSection.innerHTML = "";
+
+                    let current = this.head;
+                    while (current) {
+                        const taskElement = document.createElement("div");
+                        taskElement.className = `task${current.completed ? ' completed' : ''}`;
+                        taskElement.innerHTML = `
+                            <span>${current.data}</span>
+                            <div class="task-actions">
+                                <button onclick="completeTask(this)">Complete</button>
+                                <button onclick="deleteTask(this)">Delete</button>
+                            </div>
+                            <span class="coins">Coins: ${current.coins}</span>
+                        `;
+                        taskList.appendChild(taskElement);
+
+                        current = current.next;
+                    }
+
+                    totalPointsSection.innerHTML = `Total Points: ${this.calculateTotalPoints()}`;
+                }
+
+                calculateTotalPoints(task = null) {
+                    let current = this.head;
+                    let totalPoints = 0;
+
+                    while (current) {
+                        if (task === null || current === task) {
+                            totalPoints += current.coins;
+                        }
+                        current = current.next;
+                    }
+
+                    return totalPoints;
+                }
+
+                completeTask(button) {
+                    const taskElement = button.parentNode.parentNode;
+                    taskElement.classList.add("completed");
+
+                    const taskText = taskElement.querySelector('span').innerText;
+                    let current = this.head;
+                    while (current) {
+                        if (current.data === taskText && !current.completed) {
+                            current.completed = true;
+                            current.coins += 10;
+                            break;
+                        }
+                        current = current.next;
+                    }
+
+                    this.displayTasks();
+                }
+
+                deleteTask(button) {
+                    const taskElement = button.parentNode.parentNode;
+                    const taskText = taskElement.querySelector('span').innerText;
+                    if (this.head && this.head.data === taskText) {
+                        this.head = this.head.next;
+                    } else {
+                        let current = this.head;
+                        while (current.next) {
+                            if (current.next.data === taskText) {
+                                current.next = current.next.next;
+                                break;
+                            }
+                            current = current.next;
+                        }
+                    }
+
+                    this.displayTasks();
+                }
+            }
+
+            const taskLinkedList = new LinkedList();
+
+            window.addTask = function () {
+                const taskInput = document.getElementById("new-task");
+
+                if (taskInput.value.trim() !== "") {
+                    taskLinkedList.addTask(taskInput.value);
+                    taskInput.value = "";
+                }
+            };
+
+            window.completeTask = function (button) {
+                taskLinkedList.completeTask(button);
+            };
+
+            window.deleteTask = function (button) {
+                taskLinkedList.deleteTask(button);
+            };
+        });
+    </script>
+</body>
+</html>

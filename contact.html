@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact form</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Distressed&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"><span>SIMILIA</span><p> HOMOEOPATHIC CLINIC</P></a>
+        <ul class="navbar">
+            <li><a href="doctor.html" class="active">Home</a></li>
+            <li><a href="#" class="active">About</a></li>
+            <li><a href="#" class="active">Service</a></li>
+            <li><a href="#" class="active">Blog</a></li>
+            <li><a href="#" class="active">Contacts</a></li>
+            <li><a href="index.html" class="active">Feedback</a></li>   
+
+        </ul>
+        <div class="menu-btn">
+            <span>Menu</span>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+    <div class="contact-container">
+        <form action="https://api.web3forms.com/submit" method="POST" class="contact-left">
+            <div class="contact-left-title">
+                <h2>OpinionOracle</h2>
+                <hr>
+            </div>
+            <input type="hidden" name="access_key" value="a0cab1d1-486f-4d6f-b0be-093507f23fc9">
+            <input type="text" name="name" placeholder="Your Name" class="contact-inputs" required>
+            <input type="email" name="email" placeholder="Your Email" class="contact-inputs" required>
+            <textarea name="message" placeholder="your Message" class="contact-inputs"></textarea>
+            <button type="Submit" >Submit<img src="" alt=""></button>
+        </form>
+        <div class="contact-right">
+            <img scr="" alt="">
+        </div>
+    </div>
+    <footer>
+        <p>© 2024 SIMILIA HOMOEOPATHIC CLINIC. All rights reserved.</p>
+    </footer>
+</body>
+</html>

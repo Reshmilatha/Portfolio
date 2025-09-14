@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Cards</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .card-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .card {
+            flex: 0 0 auto;
+            background: linear-gradient(to right, #1e90ff, #87cefa);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            padding: 20px;
+            scroll-snap-align: start;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 22px;
+            margin: 10px 0;
+            color: #fff;
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #f0f0f0;
+            line-height: 1.5;
+        }
+
+        .card a {
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fff;
+            color: #1e90ff;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .card a:hover {
+            background: #1e90ff;
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                width: 250px;
+            }
+
+            .card h3 {
+                font-size: 20px;
+            }
+
+            .card p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="Placeholder Image">
+            <h3>Card Title 1</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit.</p>
+            <a href="#">Learn More</a>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="Placeholder Image">
+            <h3>Card Title 2</h3>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <a href="#">Learn More</a>
+        </div>
+        <div class="card">
+            <img src="https://via.placeholder.com/300x200" alt="Placeholder Image">
+            <h3>Card Title 3</h3>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+            <a href="#">Learn More</a>
+        </div>
+    </div>
+</body>
+</html>
